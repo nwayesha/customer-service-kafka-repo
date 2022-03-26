@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  kafka-consumer:
+    image: test/report-service
+    ports:
+      - "8080:8080"
+    network_mode: host

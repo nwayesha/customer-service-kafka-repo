@@ -1,0 +1,60 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.2'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'com.bmuschko.docker-remote-api' version '6.6.1'
+}
+
+group = 'com.api'
+version = 'latest'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	//implementation 'org.springframework:spring-webmvc:5.3.10'
+	
+	implementation 'org.springframework.kafka:spring-kafka'
+	testImplementation 'org.springframework.kafka:spring-kafka-producer'	
+	
+	
+	// https://mvnrepository.com/artifact/net.minidev/json-smart
+	implementation group: 'net.minidev', name: 'json-smart', version: '2.4.7'
+	
+	
+	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.6.1'
+	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.6.1'
+	
+	//for the mysql db
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '5.1.13'
+	
+	
+	
+	
+	
+}
+bootRun {
+   systemProperties = System.properties
+}
+
+
+test {
+	useJUnitPlatform()
+}
+
+import com.bmuschko.gradle.docker.tasks.image.*
+task buildDocker(type: DockerBuildImage, dependsOn: build) {
+	inputDir = file('docker')
+	images.add('test/customer-service')
+	doFirst {
+		copy {
+			from 'build/libs'
+			into 'docker'
+		}
+	}
+}

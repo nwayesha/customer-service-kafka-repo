@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  customer-service:
+    image: test/customer-service
+    ports:
+      - "8080:8080"
+    network_mode: host

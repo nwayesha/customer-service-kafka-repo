@@ -1,0 +1,18 @@
+ 2018  ./gradlew clean buildDocker
+ 2019  docker images
+ 2020  docker image prune --all --force
+ 2021  docker images
+ 2022  ./gradlew clean buildDocker
+ 2023  docker images
+
+ 
+ 
+ ## Create docker image
+ ./gradlew clean buildDocker
+ 
+ 
+ ##run the docker image
+ cd docker
+ docker-compose up
+ 
+ docker-compose rm
